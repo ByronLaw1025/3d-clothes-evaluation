@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D服装评分问卷</title>
+    <style>
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+        }
+        .tab button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #ccc;
+        }
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border-top: none;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .question img {
+            width: 50%; /* 根据需要调整图片宽度 */
+            height: auto;
+            margin-right: 20px;
+        }
+        .question label {
+            margin-right: 10px;
+        }
+        .save-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .introduction {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .introduction ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        .introduction li {
+            margin: 5px 0;
+        }
+        .personal-info {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .personal-info h2 {
+            margin-top: 0;
+        }
+        .info-item select {
+            padding: 5px;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        /* 添加图片放大相关样式 */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255,255,255,1);
+        overflow: auto;
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90vh;
+        margin-top: 2%;
+    }
+
+    .close {
+        position: fixed;
+        right: 35px;
+        top: 15px;
+        color: #333;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+
+    <h1>3D服装评分问卷</h1>
+    <div class="introduction">
+        <p>尊敬的参与者：</p>
+        <p>感谢您参与本次服装设计评价调查。本问卷旨在收集对不同服装设计的审美评价，数据来源于香港理工大学（PolyU）的服装数据集。</p>
+        <p>请您根据个人审美观点，对展示的服装图片进行评分：</p>
+        <ul>
+            <li>-2分：非常不美观</li>
+            <li>-1分：不太美观</li>
+            <li>0分：一般/中立</li>
+            <li>1分：比较美观</li>
+            <li>2分：非常美观</li>
+        </ul>
+
+        <p>问卷分为三个部分：连衣裙（Dress）、上衣（Top）和下装（Bottom），您可以通过上方或下方的标签切换不同类别。</p>
+    </div>
+
+    <div class="personal-info">
+        <h2>基本信息</h2>
+        <form id="info-form">
+            <div class="info-item">
+                <label>性别：</label>
+                <label><input type="radio" name="gender" value="male" required> 男</label>
+                <label><input type="radio" name="gender" value="female" required> 女</label>
+            </div>
+
+            <div class="info-item">
+                <label>出生年月：</label>
+                <select name="birth-year" required>
+                    <option value="">请选择年份</option>
+                    <option value="2006">2006年</option>
+                    <option value="2005">2005年</option>
+                    <option value="2004">2004年</option>
+                    <option value="2003">2003年</option>
+                    <option value="2002">2002年</option>
+                    <option value="2001">2001年</option>
+                    <option value="2000">2000年</option>
+                    <option value="1999">1999年</option>
+                    <option value="1998">1998年</option>
+                    <option value="1997">1997年</option>
+                    <option value="1996">1996年</option>
+                    <option value="1995" selected>1995年</option>
+                    <option value="1994">1994年</option>
+                    <option value="1993">1993年</option>
+                    <option value="1992">1992年</option>
+                    <option value="1991">1991年</option>
+                    <option value="1990">1990年</option>
+                    <option value="1989">1989年</option>
+                    <option value="1988">1988年</option>
+                    <option value="1987">1987年</option>
+                    <option value="1986">1986年</option>
+                    <option value="1985">1985年</option>
+                    <option value="1984">1984年</option>
+                    <option value="1983">1983年</option>
+                    <option value="1982">1982年</option>
+                    <option value="1981">1981年</option>
+                    <option value="1980">1980年</option>
+                    <option value="1979">1979年</option>
+                    <option value="1978">1978年</option>
+                    <option value="1977">1977年</option>
+                    <option value="1976">1976年</option>
+                    <option value="1975">1975年</option>
+                    <option value="1974">1974年</option>
+                    <option value="1973">1973年</option>
+                    <option value="1972">1972年</option>
+                    <option value="1971">1971年</option>
+                    <option value="1970">1970年</option>
+                </select>
+                <select name="birth-month" required>
+                    <option value="">请选择月份</option>
+                    <option value="1" selected>1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                </select>
+            </div>
+
+            <div class="info-item">
+                <label>服装设计行业从业年限：</label>
+                <label><input type="radio" name="experience" value="0" required> 无经验</label>
+                <label><input type="radio" name="experience" value="1-3" required> 1-3年</label>
+                <label><input type="radio" name="experience" value="4-6" required> 4-6年</label>
+                <label><input type="radio" name="experience" value="7-10" required> 7-10年</label>
+                <label><input type="radio" name="experience" value="above-10" required> 10年以上</label>
+            </div>
+        </form>
+    </div>
+
+    <p>请根据图片选择对应的评分(因图片尺寸较大，图片加载约需要1分钟，请耐心等待)</p>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Dress')">Dress</button>
+        <button class="tablinks" onclick="openTab(event, 'Top')">Top</button>
+        <button class="tablinks" onclick="openTab(event, 'Bottom')">Bottom</button>
+    </div>
+
+    <!-- 添加模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <div id="Dress" class="tabcontent">
+        <form id="dress-form">
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb0.png" alt="dress_comb0">
+                <div>
+                    Dress_batch0_00
+                    <label><input type="radio" name="Dress_batch0_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch0_01
+                    <label><input type="radio" name="Dress_batch0_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch0_02
+                    <label><input type="radio" name="Dress_batch0_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_02_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb1.png" alt="dress_comb1">
+                <div>
+                    Dress_batch0_03
+                    <label><input type="radio" name="Dress_batch0_03_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_03_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch0_04
+                    <label><input type="radio" name="Dress_batch0_04_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_04_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_04_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_04_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_04_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch0_05
+                    <label><input type="radio" name="Dress_batch0_05_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_05_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_05_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_05_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_05_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb2.png" alt="dress_comb2">
+                <div>
+                    Dress_batch0_06
+                    <label><input type="radio" name="Dress_batch0_06_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_06_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_06_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_06_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_06_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch0_07
+                    <label><input type="radio" name="Dress_batch0_07_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_07_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_07_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_07_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_07_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch0_08
+                    <label><input type="radio" name="Dress_batch0_08_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch0_08_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch0_08_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch0_08_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch0_08_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb3.png" alt="dress_comb3">
+                <div>
+                    Dress_batch1_00
+                    <label><input type="radio" name="Dress_batch1_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_01
+                    <label><input type="radio" name="Dress_batch1_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_02
+                    <label><input type="radio" name="Dress_batch1_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_02_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb4.png" alt="dress_comb4">
+                <div>
+                    Dress_batch1_03
+                    <label><input type="radio" name="Dress_batch1_03_data_clo.png" value="-2"> -2</label>
+
+                    <label><input type="radio" name="Dress_batch1_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_03_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_04
+                    <label><input type="radio" name="Dress_batch1_04_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_04_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_04_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_04_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_04_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_05
+                    <label><input type="radio" name="Dress_batch1_05_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_05_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_05_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_05_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_05_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb5.png" alt="dress_comb5">
+                <div>
+                    Dress_batch1_06
+
+                    <label><input type="radio" name="Dress_batch1_06_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_06_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_06_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_06_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_06_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_07
+                    <label><input type="radio" name="Dress_batch1_07_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_07_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_07_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_07_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_07_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_08
+                    <label><input type="radio" name="Dress_batch1_08_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_08_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_08_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_08_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_08_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb6.png" alt="dress_comb6">
+                <div>
+                    Dress_batch1_09
+
+                    <label><input type="radio" name="Dress_batch1_09_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_09_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_09_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_09_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_09_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_10
+                    <label><input type="radio" name="Dress_batch1_10_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_10_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_10_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_10_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_10_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_11
+                    <label><input type="radio" name="Dress_batch1_11_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_11_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_11_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_11_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_11_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb7.png" alt="dress_comb7">
+                <div>
+                    Dress_batch1_12
+
+                    <label><input type="radio" name="Dress_batch1_12_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_12_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_12_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_12_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_12_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch1_13
+                    <label><input type="radio" name="Dress_batch1_13_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch1_13_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch1_13_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch1_13_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch1_13_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb8.png" alt="dress_comb8">
+                <div>
+                    Dress_batch2_00
+
+                    <label><input type="radio" name="Dress_batch2_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch2_01
+                    <label><input type="radio" name="Dress_batch2_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch2_02
+                    <label><input type="radio" name="Dress_batch2_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_02_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb9.png" alt="dress_comb9">
+                <div>
+                    Dress_batch2_03
+
+                    <label><input type="radio" name="Dress_batch2_03_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_03_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch2_04
+                    <label><input type="radio" name="Dress_batch2_04_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_04_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_04_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_04_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_04_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch2_05
+                    <label><input type="radio" name="Dress_batch2_05_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_05_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_05_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_05_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_05_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb10.png" alt="dress_comb10">
+                <div>
+                    Dress_batch2_06
+
+                    <label><input type="radio" name="Dress_batch2_06_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_06_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_06_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_06_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_06_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch2_07
+                    <label><input type="radio" name="Dress_batch2_07_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch2_07_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch2_07_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch2_07_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch2_07_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb11.png" alt="dress_comb11">
+                <div>
+                    Dress_batch3_00
+
+                    <label><input type="radio" name="Dress_batch3_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch3_01
+                    <label><input type="radio" name="Dress_batch3_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch3_02
+                    <label><input type="radio" name="Dress_batch3_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_02_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb12.png" alt="dress_comb12">
+                <div>
+                    Dress_batch3_03
+
+                    <label><input type="radio" name="Dress_batch3_03_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_03_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch3_04
+                    <label><input type="radio" name="Dress_batch3_04_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_04_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_04_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_04_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_04_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch3_05
+                    <label><input type="radio" name="Dress_batch3_05_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_05_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_05_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_05_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_05_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/dress_comb13.png" alt="dress_comb13">
+                <div>
+                    Dress_batch3_06
+
+                    <label><input type="radio" name="Dress_batch3_06_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_06_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_06_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_06_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_06_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch3_07
+                    <label><input type="radio" name="Dress_batch3_07_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_07_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_07_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_07_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_07_data_clo.png" value="2"> 2</label><br /><br />
+                    Dress_batch3_08
+                    <label><input type="radio" name="Dress_batch3_08_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Dress_batch3_08_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Dress_batch3_08_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Dress_batch3_08_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Dress_batch3_08_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="Top" class="tabcontent">
+        <form id="top-form">
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb0.png" alt="top_comb0">
+                <div>
+                    Top_batch0_00
+
+                    <label><input type="radio" name="Top_batch0_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch0_01
+                    <label><input type="radio" name="Top_batch0_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch0_02
+                    <label><input type="radio" name="Top_batch0_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_02_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb1.png" alt="top_comb1">
+                <div>
+                    Top_batch0_03
+
+                    <label><input type="radio" name="Top_batch0_03_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_03_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch0_04
+                    <label><input type="radio" name="Top_batch0_04_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_04_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_04_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_04_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_04_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch0_05
+                    <label><input type="radio" name="Top_batch0_05_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_05_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_05_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_05_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_05_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb2.png" alt="top_comb2">
+                <div>
+                    Top_batch0_06
+
+                    <label><input type="radio" name="Top_batch0_06_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_06_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_06_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_06_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_06_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch0_07
+                    <label><input type="radio" name="Top_batch0_07_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_07_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_07_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_07_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_07_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch0_08
+                    <label><input type="radio" name="Top_batch0_08_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch0_08_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch0_08_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch0_08_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch0_08_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb3.png" alt="top_comb3">
+                <div>
+                    Top_batch1_00
+
+                    <label><input type="radio" name="Top_batch1_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_01
+                    <label><input type="radio" name="Top_batch1_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_02
+                    <label><input type="radio" name="Top_batch1_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_02_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb4.png" alt="top_comb4">
+                <div>
+                    Top_batch1_03
+
+                    <label><input type="radio" name="Top_batch1_03_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_03_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_04
+                    <label><input type="radio" name="Top_batch1_04_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_04_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_04_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_04_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_04_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_05
+                    <label><input type="radio" name="Top_batch1_05_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_05_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_05_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_05_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_05_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb5.png" alt="top_comb5">
+                <div>
+                    Top_batch1_06
+
+                    <label><input type="radio" name="Top_batch1_06_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_06_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_06_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_06_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_06_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_07
+                    <label><input type="radio" name="Top_batch1_07_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_07_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_07_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_07_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_07_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_08
+                    <label><input type="radio" name="Top_batch1_08_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_08_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_08_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_08_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_08_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb6.png" alt="top_comb6">
+                <div>
+                    Top_batch1_09
+
+                    <label><input type="radio" name="Top_batch1_09_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_09_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_09_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_09_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_09_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_10
+                    <label><input type="radio" name="Top_batch1_10_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_10_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_10_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_10_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_10_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_11
+                    <label><input type="radio" name="Top_batch1_11_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_11_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_11_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_11_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_11_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb7.png" alt="top_comb7">
+                <div>
+                    Top_batch1_12
+
+                    <label><input type="radio" name="Top_batch1_12_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_12_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_12_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_12_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_12_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_13
+                    <label><input type="radio" name="Top_batch1_13_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_13_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_13_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_13_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_13_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_14
+                    <label><input type="radio" name="Top_batch1_14_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_14_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_14_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_14_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_14_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb8.png" alt="top_comb8">
+                <div>
+                    Top_batch1_15
+
+                    <label><input type="radio" name="Top_batch1_15_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_15_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_15_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_15_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_15_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_16
+                    <label><input type="radio" name="Top_batch1_16_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_16_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_16_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_16_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_16_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_17
+                    <label><input type="radio" name="Top_batch1_17_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_17_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_17_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_17_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_17_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb9.png" alt="top_comb9">
+                <div>
+                    Top_batch1_18
+
+                    <label><input type="radio" name="Top_batch1_18_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_18_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_18_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_18_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_18_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_19
+                    <label><input type="radio" name="Top_batch1_19_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_19_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_19_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_19_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_19_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch1_20
+                    <label><input type="radio" name="Top_batch1_20_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch1_20_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch1_20_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch1_20_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch1_20_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/top_comb10.png" alt="top_comb10">
+                <div>
+                    Top_batch2_00
+
+                    <label><input type="radio" name="Top_batch2_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch2_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch2_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch2_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch2_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch2_01
+                    <label><input type="radio" name="Top_batch2_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch2_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch2_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch2_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch2_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch2_02
+                    <label><input type="radio" name="Top_batch2_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch2_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch2_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch2_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch2_02_data_clo.png" value="2"> 2</label><br /><br />
+                    Top_batch2_03
+                    <label><input type="radio" name="Top_batch2_03_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Top_batch2_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Top_batch2_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Top_batch2_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Top_batch2_03_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="Bottom" class="tabcontent">
+        <form id="bottom-form">
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb0.png" alt="bottom_comb0">
+                <div>
+                    Bottom_batch0_00
+
+                    <label><input type="radio" name="Bottom_batch0_00_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_00_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_00_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_00_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_00_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_01
+                    <label><input type="radio" name="Bottom_batch0_01_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_01_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_01_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_01_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_01_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_02
+                    <label><input type="radio" name="Bottom_batch0_02_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_02_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_02_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_02_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_02_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb1.png" alt="bottom_comb1">
+                <div>
+                    Bottom_batch0_03
+                    <label><input type="radio" name="Bottom_batch0_03_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_03_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_03_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_03_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_03_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_04
+                    <label><input type="radio" name="Bottom_batch0_04_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_04_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_04_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_04_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_04_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_05
+                    <label><input type="radio" name="Bottom_batch0_05_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_05_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_05_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_05_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_05_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb2.png" alt="bottom_comb2">
+                <div>
+                    Bottom_batch0_06
+                    <label><input type="radio" name="Bottom_batch0_06_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_06_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_06_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_06_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_06_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_07
+                    <label><input type="radio" name="Bottom_batch0_07_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_07_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_07_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_07_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_07_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_08
+                    <label><input type="radio" name="Bottom_batch0_08_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_08_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_08_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_08_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_08_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb3.png" alt="bottom_comb3">
+                <div>
+                    Bottom_batch0_09
+                    <label><input type="radio" name="Bottom_batch0_09_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_09_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_09_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_09_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_09_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_10
+                    <label><input type="radio" name="Bottom_batch0_10_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_10_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_10_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_10_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_10_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_11
+                    <label><input type="radio" name="Bottom_batch0_11_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_11_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_11_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_11_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_11_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb4.png" alt="bottom_comb4">
+                <div>
+                    Bottom_batch0_12
+                    <label><input type="radio" name="Bottom_batch0_12_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_12_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_12_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_12_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_12_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_13
+                    <label><input type="radio" name="Bottom_batch0_13_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_13_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_13_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_13_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_13_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_14
+                    <label><input type="radio" name="Bottom_batch0_14_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_14_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_14_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_14_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_14_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb5.png" alt="bottom_comb5">
+                <div>
+                    Bottom_batch0_15
+                    <label><input type="radio" name="Bottom_batch0_15_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_15_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_15_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_15_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_15_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_16
+                    <label><input type="radio" name="Bottom_batch0_16_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_16_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_16_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_16_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_16_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_17
+                    <label><input type="radio" name="Bottom_batch0_17_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_17_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_17_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_17_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_17_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb6.png" alt="bottom_comb6">
+                <div>
+                    Bottom_batch0_18
+                    <label><input type="radio" name="Bottom_batch0_18_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_18_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_18_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_18_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_18_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_19
+                    <label><input type="radio" name="Bottom_batch0_19_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_19_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_19_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_19_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_19_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_20
+                    <label><input type="radio" name="Bottom_batch0_20_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_20_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_20_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_20_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_20_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb7.png" alt="bottom_comb7">
+                <div>
+                    Bottom_batch0_21
+                    <label><input type="radio" name="Bottom_batch0_21_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_21_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_21_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_21_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_21_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_22
+                    <label><input type="radio" name="Bottom_batch0_22_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_22_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_22_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_22_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_22_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_23
+                    <label><input type="radio" name="Bottom_batch0_23_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_23_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_23_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_23_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_23_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+    
+            <div class="question">
+                <img src="https://3d-clothes-imgs.oss-cn-shenzhen.aliyuncs.com/comb_clo/bottom_comb8.png" alt="bottom_comb8">
+                <div>
+                    Bottom_batch0_24
+                    <label><input type="radio" name="Bottom_batch0_24_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_24_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_24_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_24_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_24_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_25
+                    <label><input type="radio" name="Bottom_batch0_25_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_25_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_25_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_25_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_25_data_clo.png" value="2"> 2</label><br /><br />
+                    Bottom_batch0_26
+                    <label><input type="radio" name="Bottom_batch0_26_data_clo.png" value="-2"> -2</label>
+                    <label><input type="radio" name="Bottom_batch0_26_data_clo.png" value="-1"> -1</label>
+                    <label><input type="radio" name="Bottom_batch0_26_data_clo.png" value="0"> 0</label>
+                    <label><input type="radio" name="Bottom_batch0_26_data_clo.png" value="1"> 1</label>
+                    <label><input type="radio" name="Bottom_batch0_26_data_clo.png" value="2"> 2</label><br /><br />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Dress')">Dress</button>
+        <button class="tablinks" onclick="openTab(event, 'Top')">Top</button>
+        <button class="tablinks" onclick="openTab(event, 'Bottom')">Bottom</button>
+    </div>
+        <!-- 添加更多问题 -->
+    </form>
+    <button class="save-button" onclick="saveResults()">保存结果</button>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // 随机打乱数组的函数
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function saveResults() {
+            const forms = document.querySelectorAll('form');
+            const results = {};
+            let allFilled = true;
+
+            // 首先收集基本信息
+            const infoForm = document.getElementById('info-form');
+            const infoData = new FormData(infoForm);
+            for (let [key, value] of infoData.entries()) {
+                results[key] = value;
+            }
+
+            forms.forEach(form => {
+                if (form.id === 'info-form') return; // 跳过基本信息表单
+                
+                const formData = new FormData(form);
+                const questions = form.querySelectorAll('.question');
+                
+                questions.forEach(question => {
+                    const radios = question.querySelectorAll('input[type="radio"]');
+                    const name = radios[0].name;
+                    const checked = Array.from(radios).some(radio => radio.checked);
+                    
+                    if (!checked) {
+                        allFilled = false;
+                        question.style.border = '2px solid red'; // Highlight the question
+                    } else {
+                        question.style.border = 'none'; // Remove highlight if filled
+                    }
+                });
+
+                for (let [key, value] of formData.entries()) {
+                    results[key] = value;
+                }
+            });
+
+            if (!allFilled) {
+                alert('请填写所有题目，未填写题目已用红色标记。');
+                return;
+            }
+
+            const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'survey_results.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // 页面加载完成后执行随机排序
+        window.onload = function() {
+            // 获取所有标签页
+            const tabs = ['Dress', 'Top', 'Bottom'];
+            
+            tabs.forEach(tabName => {
+                const form = document.getElementById(tabName.toLowerCase() + '-form');
+                if (!form) return;
+
+                // 获取所有问题容器
+                const questions = Array.from(form.getElementsByClassName('question'));
+                
+                // 随机打乱问题顺序
+                const shuffledQuestions = shuffleArray(questions);
+                
+                // 清空原有内容
+                form.innerHTML = '';
+                
+                // 按新顺序重新添加问题
+                shuffledQuestions.forEach(question => {
+                    form.appendChild(question);
+                });
+            });
+
+            // 默认显示第一个标签页
+            document.querySelector('.tab button').click();
+        }
+
+        // 图片放大功能
+        var modal = document.getElementById("imageModal");
+        var modalImg = document.getElementById("modalImage");
+        var closeBtn = document.getElementsByClassName("close")[0];
+
+        // 为所有问卷图片添加点击事件
+        document.querySelectorAll('.question img').forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+            }
+        });
+
+        // 点击关闭按钮关闭模态框
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // 点击模态框外部关闭
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 添加键盘ESC键关闭功能
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
