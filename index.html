@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D服装评分问卷</title>
+
+
     <style>
         .tab {
             overflow: hidden;
@@ -41,7 +43,7 @@
             width: 50%; /* 根据需要调整图片宽度 */
             height: auto;
             margin-right: 20px;
-        }
+        } 
         .question label {
             margin-right: 10px;
         }
@@ -82,35 +84,93 @@
             border-radius: 4px;
         }
         /* 添加图片放大相关样式 */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255,255,255,1);
-        overflow: auto;
-    }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,1);
+            overflow: auto;
+        }
 
-    .modal-content {
-        margin: auto;
-        display: block;
-        max-width: 90%;
-        max-height: 90vh;
-        margin-top: 2%;
-    }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90vh;
+            margin-top: 2%;
+        }
 
-    .close {
-        position: fixed;
-        right: 35px;
-        top: 15px;
-        color: #333;
-        font-size: 40px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+        .close {
+            position: fixed;
+            right: 35px;
+            top: 15px;
+            color: #333;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* 添加登录遮罩层样式 */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .login-box h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: #45a049;
+        }
+
+        .login-error {
+            color: red;
+            margin-bottom: 10px;
+            display: none;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -227,7 +287,7 @@
     <div id="Dress" class="tabcontent">
         <form id="dress-form">
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a616a9d0e0a243d4fca108.png" alt="dress_comb0">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb0.png" alt="dress_comb0">
                 <div>
                     <p><b>部位</b>：领部</p>
                     <p><b>固定元素</b>：V领</p>
@@ -254,7 +314,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a616a8d0e0a243d4fca106.png" alt="dress_comb1">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb1.png" alt="dress_comb1">
                 <div>
                     <p><b>部位</b>：领部</p>
                     <p><b>固定元素</b>：圆领</p>
@@ -281,7 +341,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a616a7d0e0a243d4fca105.png" alt="dress_comb2">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb2.png" alt="dress_comb2">
                 <div>
                     <p><b>部位</b>：领部</p>
                     <p><b>固定元素</b>：方领</p>
@@ -308,7 +368,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61622d0e0a243d4fca0d9.png" alt="dress_comb3">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb3.png" alt="dress_comb3">
                 <div>
                     <p><b>变化部位</b>：袖部</p>
                     <p><b>固定元素</b>：无袖</p>
@@ -329,7 +389,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61621d0e0a243d4fca0d8.png" alt="dress_comb4">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb4.png" alt="dress_comb4">
                 <div>
                     <p><b>变化部位</b>：袖部</p>
                     <p><b>固定元素</b>：短袖；窄袖笼</p>
@@ -356,7 +416,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a613cbd0e0a243d4fca04b.png" alt="dress_comb5">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb5.png" alt="dress_comb5">
                 <div>
                     <p><b>变化部位</b>：袖部</p>
                     <p><b>固定元素</b>：短袖；中袖笼</p>
@@ -383,7 +443,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a613c9d0e0a243d4fca04a.png" alt="dress_comb6">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb6.png" alt="dress_comb6">
                 <div>
                     <p><b>变化部位</b>：袖部</p>
                     <p><b>固定元素</b>：长袖；窄袖笼</p>
@@ -410,7 +470,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a613c8d0e0a243d4fca049.png" alt="dress_comb7">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb7.png" alt="dress_comb7">
                 <div>
                     <p><b>变化部位</b>：袖部</p>
                     <p><b>固定元素</b>：长袖；中袖笼</p>
@@ -437,7 +497,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a613c7d0e0a243d4fca048.png" alt="dress_comb8">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb8.png" alt="dress_comb8">
                 <div>
                     <p><b>变化部位</b>：廓形</p>
                     <p><b>固定元素</b>：宽松，有腰带</p>
@@ -464,7 +524,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a613c6d0e0a243d4fca047.png" alt="dress_comb9">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb9.png" alt="dress_comb9">
                 <div>
                     <p><b>变化部位</b>：廓形</p>
                     <p><b>固定元素</b>：宽松，无腰带</p>
@@ -491,7 +551,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61317d0e0a243d4fca01f.png" alt="dress_comb10">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb10.png" alt="dress_comb10">
                 <div>
                     <p><b>变化部位</b>：廓形</p>
                     <p><b>固定元素</b>：修身</p>
@@ -512,7 +572,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61316d0e0a243d4fca01e.png" alt="dress_comb11">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb11.png" alt="dress_comb11">
                 <div>
                     <p><b>变化部位</b>：裙摆</p>
                     <p><b>固定元素</b>：裙长-短款</p>
@@ -539,7 +599,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61315d0e0a243d4fca01d.png" alt="dress_comb12">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb12.png" alt="dress_comb12">
                 <div>
                     <p><b>变化部位</b>：裙摆</p>
                     <p><b>固定元素</b>：裙长-中款</p>
@@ -566,7 +626,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61313d0e0a243d4fca01b.png" alt="dress_comb13">
+                <img src="https://pic1.imgdb.cn/item/143079/dress_comb13.png" alt="dress_comb13">
                 <div>
                     <p><b>变化部位</b>：裙摆</p>
                     <p><b>固定元素</b>：裙长-长款</p>
@@ -597,7 +657,7 @@
     <div id="Top" class="tabcontent">
         <form id="top-form">
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61312d0e0a243d4fca01a.png" alt="top_comb0">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb0.png" alt="top_comb0">
                 <div>
                     <p><b>部位</b>：领部</p>
                     <p><b>固定元素</b>：V领</p>
@@ -624,7 +684,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61215d0e0a243d4fc9fc0.png" alt="top_comb1">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb1.png" alt="top_comb1">
                 <div>
                     <p><b>部位</b>：领部</p>
                     <p><b>固定元素</b>：圆领</p>
@@ -651,7 +711,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61214d0e0a243d4fc9fbf.png" alt="top_comb2">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb2.png" alt="top_comb2">
                 <div>
                     <p><b>部位</b>：领部</p>
                     <p><b>固定元素</b>：方领</p>
@@ -678,7 +738,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61213d0e0a243d4fc9fbe.png" alt="top_comb3">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb3.png" alt="top_comb3">
                 <div>
                     <p><b>部位</b>：袖部</p>
                     <p><b>固定元素</b>：无袖</p>
@@ -705,7 +765,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61211d0e0a243d4fc9fbd.png" alt="top_comb4">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb4.png" alt="top_comb4">
                 <div>
                     <p><b>部位</b>：袖部</p>
                     <p><b>固定元素</b>：短袖，窄袖笼</p>
@@ -732,10 +792,11 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61210d0e0a243d4fc9fbc.png" alt="top_comb5">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb5.png" alt="top_comb5">
                 <div>
                     <p><b>部位</b>：袖部</p>
                     <p><b>固定元素</b>：短袖，中袖笼</p>
+
                     <p><b>变化元素</b>：袖口（窄，中，宽）</p>
                     Top_batch1_06
                     <label><input type="radio" name="Top_batch1_06_data_clo.png" value="-2"> -2</label>
@@ -759,10 +820,11 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61105d0e0a243d4fc9f9e.png" alt="top_comb6">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb6.png" alt="top_comb6"> 
                 <div>
                     <p><b>部位</b>：袖部</p>
                     <p><b>固定元素</b>：短袖，宽袖笼</p>
+
                     <p><b>变化元素</b>：袖口（窄，中，宽）</p>
                     Top_batch1_09
                     <label><input type="radio" name="Top_batch1_09_data_clo.png" value="-2"> -2</label>
@@ -786,9 +848,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61104d0e0a243d4fc9f9d.png" alt="top_comb7">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb7.png" alt="top_comb7">
                 <div>
                     <p><b>部位</b>：袖部</p>
+
                     <p><b>固定元素</b>：长袖，窄袖笼</p>
                     <p><b>变化元素</b>：袖口（窄，中，宽）</p>
                     Top_batch1_12
@@ -813,10 +876,11 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61103d0e0a243d4fc9f9c.png" alt="top_comb8">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb8.png" alt="top_comb8">
                 <div>
                     <p><b>部位</b>：袖部</p>
                     <p><b>固定元素</b>：长袖，中袖笼</p>
+
                     <p><b>变化元素</b>：袖口（窄，中，宽）</p>
                     Top_batch1_15
                     <label><input type="radio" name="Top_batch1_15_data_clo.png" value="-2"> -2</label>
@@ -840,9 +904,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61102d0e0a243d4fc9f9b.png" alt="top_comb9">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb9.png" alt="top_comb9">
                 <div>
                     <p><b>部位</b>：袖部</p>
+
                     <p><b>固定元素</b>：长袖，宽袖笼</p>
                     <p><b>变化元素</b>：袖口（窄，中，宽）</p>
                     Top_batch1_18
@@ -867,9 +932,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a61101d0e0a243d4fc9f9a.png" alt="top_comb10">
+                <img src="https://pic1.imgdb.cn/item/143079/top_comb10.png" alt="top_comb10">
                 <div>
                     <p><b>部位</b>：廓形</p>
+
                     <p><b>变化元素</b>：00套为宽松+短衣长，01套为宽松+中衣长，02套为宽松+长衣长，03套为修身</p>
                     Top_batch2_00
                     <label><input type="radio" name="Top_batch2_00_data_clo.png" value="-2"> -2</label>
@@ -903,9 +969,10 @@
     <div id="Bottom" class="tabcontent">
         <form id="bottom-form">
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a615a3d0e0a243d4fca0af.png" alt="bottom_comb0">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb0.png" alt="bottom_comb0">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-短款，下摆-窄</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_00
@@ -930,9 +997,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a615a8d0e0a243d4fca0b3.png" alt="bottom_comb1">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb1.png" alt="bottom_comb1">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-短款，下摆-中</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_03
@@ -957,9 +1025,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a615a7d0e0a243d4fca0b2.png" alt="bottom_comb2">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb2.png" alt="bottom_comb2">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-短款，下摆-宽</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_06
@@ -984,9 +1053,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a615a6d0e0a243d4fca0b1.png" alt="bottom_comb3">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb3.png" alt="bottom_comb3">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-中款，下摆-窄</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_09
@@ -1011,9 +1081,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a615a5d0e0a243d4fca0b0.png" alt="bottom_comb4">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb4.png" alt="bottom_comb4">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-中款，下摆-中</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_12
@@ -1038,9 +1109,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a616d2d0e0a243d4fca110.png" alt="bottom_comb5">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb5.png" alt="bottom_comb5">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-中款，下摆-宽</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_15
@@ -1065,9 +1137,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a616d4d0e0a243d4fca111.png" alt="bottom_comb6">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb6.png" alt="bottom_comb6">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-长款，下摆-窄</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_18
@@ -1092,9 +1165,10 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a616abd0e0a243d4fca10a.png" alt="bottom_comb7">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb7.png" alt="bottom_comb7">
                 <div>
                     <p><b>部位</b>：裤型</p>
+
                     <p><b>固定元素</b>：裤长-长款，下摆-中</p>
                     <p><b>变化元素</b>：腰高（高，中，低）</p>
                     Bottom_batch0_21
@@ -1119,7 +1193,7 @@
             </div>
     
             <div class="question">
-                <img src="https://pic1.imgdb.cn/item/67a616aad0e0a243d4fca109.png" alt="bottom_comb8">
+                <img src="https://pic1.imgdb.cn/item/143079/bottom_comb8.png" alt="bottom_comb8">
                 <div>
                     <p><b>部位</b>：裤型</p>
                     <p><b>固定元素</b>：裤长-长款，下摆-宽</p>
@@ -1156,6 +1230,17 @@
     </form>
     <button class="save-button" onclick="saveResults()">保存结果</button>
 
+    <!-- 添加登录遮罩层 -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>访问验证</h2>
+            <div id="loginError" class="login-error">密码错误，请重试</div>
+            <input type="text" id="nickname" placeholder="请输入您的昵称" required>
+            <input type="password" id="password" placeholder="请输入访问密码" required>
+            <button onclick="checkPassword()">进入问卷</button>
+        </div>
+    </div>
+
     <script>
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -1169,6 +1254,9 @@
             }
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
+
+            // 瞬间滚动到顶部第20行位置
+            window.scrollTo(0, 600);
         }
 
         // 随机打乱数组的函数
@@ -1180,9 +1268,49 @@
             return array;
         }
 
+        function encrypt(str) {
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+                function toSolidBytes(match, p1) {
+                    return String.fromCharCode('0x' + p1);
+            }));
+        }
+
+        // 添加全局变量
+        // 存储加密后的密码
+        const correctPassword = "MTIzNDU2Nzg="; 
+        let userNickname = "";
+
+
+        // 修改验证函数
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const nickname = document.getElementById('nickname').value;
+            const loginError = document.getElementById('loginError');
+            
+            if (!nickname.trim()) {
+                loginError.textContent = "请输入昵称";
+                loginError.style.display = "block";
+                return;
+            }
+
+            // 验证加密后的密码
+            if (encrypt(password) === correctPassword) {
+                userNickname = nickname;
+                document.getElementById('loginOverlay').style.display = 'none';
+                loginError.style.display = "none";
+            } else {
+                loginError.textContent = "密码错误，请重试";
+                loginError.style.display = "block";
+            }
+        }
+
+        // 修改保存结果函数
         function saveResults() {
             const forms = document.querySelectorAll('form');
-            const results = {};
+            const results = {
+                nickname: userNickname,
+                submitTime: new Date().toISOString()
+            };
             let allFilled = true;
 
             // 首先收集基本信息
@@ -1205,9 +1333,9 @@
                     
                     if (!checked) {
                         allFilled = false;
-                        question.style.border = '2px solid red'; // Highlight the question
+                        question.style.border = '2px solid red';
                     } else {
-                        question.style.border = 'none'; // Remove highlight if filled
+                        question.style.border = 'none';
                     }
                 });
 
@@ -1221,74 +1349,92 @@
                 return;
             }
 
+            // 生成文件名（使用昵称和时间戳）
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const fileName = `survey_results_${userNickname}_${timestamp}.json`;
+
+            // 创建并下载文件
             const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'survey_results.json';
+            a.download = fileName;
             a.click();
             URL.revokeObjectURL(url);
-        }
+            }
 
-        // 页面加载完成后执行随机排序
-        window.onload = function() {
-            // 获取所有标签页
-            const tabs = ['Dress', 'Top', 'Bottom'];
-            
-            tabs.forEach(tabName => {
-                const form = document.getElementById(tabName.toLowerCase() + '-form');
-                if (!form) return;
-
-                // 获取所有问题容器
-                const questions = Array.from(form.getElementsByClassName('question'));
-                
-                // 随机打乱问题顺序
-                const shuffledQuestions = shuffleArray(questions);
-                
-                // 清空原有内容
-                form.innerHTML = '';
-                
-                // 按新顺序重新添加问题
-                shuffledQuestions.forEach(question => {
-                    form.appendChild(question);
-                });
+            // 添加回车键支持
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
             });
 
-            // 默认显示第一个标签页
-            document.querySelector('.tab button').click();
-        }
+            document.getElementById('nickname').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('password').focus();
+                }
+            });
 
-        // 图片放大功能
-        var modal = document.getElementById("imageModal");
-        var modalImg = document.getElementById("modalImage");
-        var closeBtn = document.getElementsByClassName("close")[0];
+            // 页面加载完成后执行随机排序
+            window.onload = function() {
+                // 获取所有标签页
+                const tabs = ['Dress', 'Top', 'Bottom'];
+                
+                tabs.forEach(tabName => {
+                    const form = document.getElementById(tabName.toLowerCase() + '-form');
+                    if (!form) return;
 
-        // 为所有问卷图片添加点击事件
-        document.querySelectorAll('.question img').forEach(img => {
-            img.onclick = function() {
-                modal.style.display = "block";
-                modalImg.src = this.src;
+                    // 获取所有问题容器
+                    const questions = Array.from(form.getElementsByClassName('question'));
+                    
+                    // 随机打乱问题顺序
+                    const shuffledQuestions = shuffleArray(questions);
+                    
+                    // 清空原有内容
+                    form.innerHTML = '';
+                    
+                    // 按新顺序重新添加问题
+                    shuffledQuestions.forEach(question => {
+                        form.appendChild(question);
+                    });
+                });
+
+                // 默认显示第一个标签页
+                document.querySelector('.tab button').click();
             }
-        });
 
-        // 点击关闭按钮关闭模态框
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
+            // 图片放大功能
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImage");
+            var closeBtn = document.getElementsByClassName("close")[0];
 
-        // 点击模态框外部关闭
-        modal.onclick = function(event) {
-            if (event.target === modal) {
+            // 为所有问卷图片添加点击事件
+            document.querySelectorAll('.question img').forEach(img => {
+                img.onclick = function() {
+                    modal.style.display = "block";
+                    modalImg.src = this.src;
+                }
+            });
+
+            // 点击关闭按钮关闭模态框
+            closeBtn.onclick = function() {
                 modal.style.display = "none";
             }
-        }
 
-        // 添加键盘ESC键关闭功能
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                modal.style.display = "none";
+            // 点击模态框外部关闭
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
             }
-        });
+
+            // 添加键盘ESC键关闭功能
+            document.addEventListener('keydown', function(event) {
+                if (event.key === "Escape") {
+                    modal.style.display = "none";
+                }
+            });
     </script>
 </body>
 </html>
